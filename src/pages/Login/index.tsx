@@ -15,7 +15,7 @@ const Login = () => {
     try {
       setLoading(true)
       await getUser(values)
-      navigate(links.layout)
+      navigate(links.dashboard)
       message.success('Lgoin success!')
     } catch (error) {
       throw new Error('login faild')

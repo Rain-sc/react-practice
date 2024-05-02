@@ -5,30 +5,35 @@ import Login from "@/pages/Login";
 import Publish from "@/pages/Publish";
 import { createBrowserRouter } from "react-router-dom";
 import { links } from "./links";
+import Redirect from "@/pages/Dashboard/Redirect";
+import RequiredAuth from "./requireAuth";
 
 const router = createBrowserRouter([
+  {
+    path: links.home,
+    element: <Redirect />
+  },
   {
     path: links.login,
     element: <Login />,
   },
-  // {
-  //   path: links.layout,
-  //   element: <Layout />,
-  //   children: [
-  //     {
-  //       path: links.dashboard,
-  //       element: <Dashboard />
-  //     },
-  //     {
-  //       path: links.article,
-  //       element: <Article />
-  //     },
-  //     {
-  //       path: links.publish,
-  //       element: <Publish />
-  //     }
-  //   ]
-  // }
+  {
+    element: <RequiredAuth><Layout /></RequiredAuth>,
+    children: [
+      {
+        path: links.dashboard,
+        element: <Dashboard />
+      },
+      {
+        path: links.article,
+        element: <Article />
+      },
+      {
+        path: links.publish,
+        element: <Publish />
+      }
+    ]
+  }
 ])
 
 export default router;
