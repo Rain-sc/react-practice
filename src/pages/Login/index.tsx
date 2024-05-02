@@ -1,10 +1,29 @@
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, message } from 'antd';
 import { useState } from "react";
 import loginBg from '@/assets/images/login/login-bg.png';
+import { LoginValue } from '@/interfaces/models/user';
+import useStore from '@/store';
+import { useNavigate } from 'react-router-dom';
+import { links } from '@/router/links';
 
 const Login = () => {
   const [loading, setLoading] = useState<boolean>(false)
+  const { getUser } = useStore()
+  const navigate = useNavigate()
 
+  const onFinish = async (values: LoginValue) => {
+    try {
+      setLoading(true)
+      await getUser(values)
+      navigate(links.layout)
+      message.success('Lgoin success!')
+    } catch (error) {
+      throw new Error('login faild')
+    } finally {
+      setLoading(false)
+    }
+
+  }
   return (
     <div className="relative">
       <div className="absolute inset-x-0 -top-48 -bottom-14 overflow-hidden bg-indigo-50">
@@ -51,6 +70,7 @@ const Login = () => {
                     }}
                     layout="vertical"
                     requiredMark={false}
+                    onFinish={onFinish}
                   >
                     <div>
                       <Form.Item
