@@ -8,13 +8,13 @@ import { links } from '@/router/links';
 
 const Login = () => {
   const [loading, setLoading] = useState<boolean>(false)
-  const { getUser } = useStore()
+  const { fetchLogin } = useStore()
   const navigate = useNavigate()
 
   const onFinish = async (values: LoginValue) => {
     try {
       setLoading(true)
-      await getUser(values)
+      await fetchLogin(values)
       navigate(links.dashboard)
       message.success('Lgoin success!')
     } catch (error) {
