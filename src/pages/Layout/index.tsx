@@ -8,6 +8,10 @@ import {
 } from '@ant-design/icons'
 import { Layout, Menu, Popconfirm } from 'antd'
 import './index.scss'
+import { useEffect } from "react"
+import { useDispatch } from "react-redux"
+import { fetchUserInfo, setLogout } from "@/store/modules/user"
+import { useSelector } from "react-redux"
 const { Header, Sider } = Layout
 
 
@@ -32,21 +36,28 @@ const siderItems = [
 const MainLayout = () => {
   const { pathname } = useLocation()
   const navigate = useNavigate()
-  const onLogout = () => {
+  const dispatch = useDispatch()
+  const userInfo = useSelector(state => state.user.userInfo)
 
+  const onLogout = () => {
+    dispatch(setLogout())
+    navigate(links.login)
   }
   const onMenuClick = ({ key }: { key: string }) => {
     navigate(key)
   }
+  useEffect(() => {
+    dispatch(fetchUserInfo())
+  }, [dispatch])
   return (
     <Layout className="h-full">
       <Header className="header">
         <div className="logo" />
         <div className="user-info">
-          <span className="user-name">{name}</span>
+          <span className="user-name">{userInfo.name}</span>
           <span className="user-logout">
-            <Popconfirm title="是否确认退出？" okText="退出" cancelText="取消" onConfirm={onLogout}>
-              <LogoutOutlined /> 退出
+            <Popconfirm title="Are you logout?" okText="Yes" cancelText="No" onConfirm={onLogout}>
+              <LogoutOutlined /> Logout
             </Popconfirm>
           </span>
         </div>

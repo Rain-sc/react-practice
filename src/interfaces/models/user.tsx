@@ -1,6 +1,6 @@
 export interface ResValue<T> {
   data: T,
-  message: string
+  message?: string
 }
 export interface LoginValue {
   mobile: string
