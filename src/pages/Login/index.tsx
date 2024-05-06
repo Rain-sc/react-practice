@@ -2,19 +2,21 @@ import { Button, Form, Input, message } from 'antd';
 import { useState } from "react";
 import loginBg from '@/assets/images/login/login-bg.png';
 import { LoginValue } from '@/interfaces/models/user';
-import useStore from '@/store';
 import { useNavigate } from 'react-router-dom';
 import { links } from '@/router/links';
+import { useDispatch } from 'react-redux';
+import { fetchLogin } from '@/store/modules/user';
 
 const Login = () => {
   const [loading, setLoading] = useState<boolean>(false)
-  const { fetchLogin } = useStore()
   const navigate = useNavigate()
+  const dispatch = useDispatch()
+
 
   const onFinish = async (values: LoginValue) => {
     try {
       setLoading(true)
-      await fetchLogin(values)
+      await dispatch(fetchLogin(values))
       navigate(links.dashboard)
       message.success('Lgoin success!')
     } catch (error) {

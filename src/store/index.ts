@@ -1,10 +1,12 @@
-import { create } from "zustand";
-import userStore, { UserStoreValue } from './modules/user'
+import { configureStore } from "@reduxjs/toolkit";
+import userReducer from "./modules/user";
 
-const useStore = create<UserStoreValue>((...a) => {
-  return {
-    ...userStore(...a)
+export const store = configureStore({
+  reducer: {
+    user: userReducer
   }
 })
 
-export default useStore;
+export type AppDispatch = typeof store.dispatch
+
+

@@ -1,9 +1,10 @@
 import { links } from "@/router/links"
-import useStore from "@/store"
+import { UserStoreValue } from "@/store/modules/user"
+import { useSelector } from "react-redux"
 import { Navigate } from "react-router-dom"
 
 const Redirect = () => {
-  const { token } = useStore()
+  const { token } = useSelector((state: UserStoreValue) => state.user)
   return (
     <Navigate to={token ? links.dashboard : links.login} replace />
   )

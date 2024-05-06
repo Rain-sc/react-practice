@@ -1,42 +1,38 @@
 import { getUserInfoAPI, loginAPI } from "@/apis/user"
 import { LoginValue, UserInfoItemValue } from "@/interfaces/models/user"
-import { StateCreator } from "zustand";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 
-export interface UserStoreValue {
+export interface UserValue {
   token: string;
-  fetchLogin: (loginForm: LoginValue) => Promise<void>;
-  userInfo: UserInfoItemValue
-  fetchUserInfo: () => Promise<void>;
-
 }
-
-const createUserStore: StateCreator<UserStoreValue> = (set) => {
-  return {
-    token: localStorage.getItem('token_key') || '',
-    userInfo: {
-      birthday: '',
-      gender: 0,
-      id: '',
-      intro: null,
-      mobile: '',
-      name: '',
-      photo: ''
-    },
-    fetchLogin: async (loginForm: LoginValue) => {
-      const res = await loginAPI(loginForm)
-      localStorage.setItem('token_key', res.data.token)
-      set({
-        token: res.data.token
-      })
-    },
-    fetchUserInfo: async () => {
-      const res = await getUserInfoAPI()
-      set({
-        userInfo: res.data.data
-      })
-
+export interface UserStoreValue {
+  user: UserValue
+}
+const initialState: UserValue = {
+  token: '',
+}
+const userStore = createSlice({
+  name: 'user',
+  initialState,
+  reducers: {
+    setToken(state, action: PayloadAction<string>) {
+      state.token = action.payload
     }
+  }
+})
+
+const { setToken } = userStore.actions
+const userReducer = userStore.reducer
+
+const fetchLogin = (loginForm: LoginValue) => {
+  return async (dispatch: any) => {
+    const res = await loginAPI(loginForm)
+    dispatch(setToken(res.data.token))
   }
 }
 
-export default createUserStore
+export {
+  fetchLogin
+}
+
+export default userReducer
