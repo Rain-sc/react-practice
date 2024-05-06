@@ -9,7 +9,7 @@ export interface UserStoreValue {
   user: UserValue
 }
 const initialState: UserValue = {
-  token: '',
+  token: localStorage.getItem('token') || '',
 }
 const userStore = createSlice({
   name: 'user',
@@ -17,6 +17,7 @@ const userStore = createSlice({
   reducers: {
     setToken(state, action: PayloadAction<string>) {
       state.token = action.payload
+      localStorage.setItem('token', action.payload)
     }
   }
 })
