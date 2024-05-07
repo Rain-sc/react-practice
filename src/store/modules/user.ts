@@ -1,12 +1,12 @@
 import { getUserInfoAPI, loginAPI } from "@/apis/user"
-import { LoginValue, ResValue, UserInfoItemValue } from "@/interfaces/models/user"
+import { LoginValue, UserInfoItemValue } from "@/types/models/user"
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 
-export interface UserValue {
+export type UserValue = {
   token: string;
   userInfo: UserInfoItemValue
 }
-export interface UserStoreValue {
+export type UserStoreValue = {
   user: UserValue
 }
 const initialState: UserValue = {
@@ -61,7 +61,7 @@ const fetchLogin = (loginForm: LoginValue) => {
 const fetchUserInfo = () => {
   return async (dispatch: any) => {
     const res = await getUserInfoAPI()
-    dispatch(setUserInfo(res.data))
+    dispatch(setUserInfo(res.data.data))
   }
 }
 export {

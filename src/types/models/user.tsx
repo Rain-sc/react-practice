@@ -1,13 +1,13 @@
-export interface ResValue<T> {
+export type ResValue<T> = {
   data: T,
   message?: string
 }
-export interface LoginValue {
+export type LoginValue = {
   mobile: string
   code: string
 }
 
-export interface UserInfoItemValue {
+export type UserInfoItemValue = {
   birthday: string;
   gender: number;
   id: string;

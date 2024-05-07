@@ -1,4 +1,4 @@
-import { LoginValue, ResValue, UserInfoItemValue } from "@/interfaces/models/user";
+import { LoginValue, ResValue, UserInfoItemValue } from "@/types/models/user";
 import { http } from "@/utils";
 
 

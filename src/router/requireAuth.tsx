@@ -1,7 +1,7 @@
 import { Navigate } from "react-router-dom"
 import { links } from "./links"
 
-interface RequiredAuthProps {
+type RequiredAuthProps = {
   children: JSX.Element
 }
 

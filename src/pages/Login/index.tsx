@@ -1,7 +1,7 @@
 import { Button, Form, Input, message } from 'antd';
 import { useState } from "react";
 import loginBg from '@/assets/images/login/login-bg.png';
-import { LoginValue } from '@/interfaces/models/user';
+import { LoginValue } from '@/types/models/user';
 import { useNavigate } from 'react-router-dom';
 import { links } from '@/router/links';
 import { useDispatch } from 'react-redux';
