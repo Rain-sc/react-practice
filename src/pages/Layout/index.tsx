@@ -9,7 +9,7 @@ import {
 import { Layout, Menu, Popconfirm } from 'antd'
 import './index.scss'
 import { useEffect } from "react"
-import { UserStoreValue, fetchUserInfo, setLogout } from "@/store/modules/user"
+import { UserStoreType, fetchUserInfo, setLogout } from "@/store/modules/user"
 import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux"
 const { Header, Sider } = Layout
@@ -36,7 +36,7 @@ const MainLayout = () => {
   const { pathname } = useLocation()
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const userInfo = useSelector((state: UserStoreValue) => state.user.userInfo)
+  const userInfo = useSelector((state: UserStoreType) => state.user.userInfo)
 
   const onLogout = () => {
     dispatch(setLogout())

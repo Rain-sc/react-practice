@@ -1,13 +1,13 @@
-export type ResValue<T> = {
+export type ResType<T> = {
   data: T,
   message?: string
 }
-export type LoginValue = {
+export type LoginType = {
   mobile: string
   code: string
 }
 
-export type UserInfoItemValue = {
+export type UserInfoItemType = {
   birthday: string;
   gender: number;
   id: string;

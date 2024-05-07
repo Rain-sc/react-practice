@@ -1,15 +1,15 @@
 import { getUserInfoAPI, loginAPI } from "@/apis/user"
-import { LoginValue, UserInfoItemValue } from "@/types/models/user"
+import { LoginType, UserInfoItemType } from "@/types/models/user"
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 
-export type UserValue = {
+export type UserType = {
   token: string;
-  userInfo: UserInfoItemValue
+  userInfo: UserInfoItemType
 }
-export type UserStoreValue = {
-  user: UserValue
+export type UserStoreType = {
+  user: UserType
 }
-const initialState: UserValue = {
+const initialState: UserType = {
   token: localStorage.getItem('token') || '',
   userInfo: {
     birthday: '',
@@ -29,7 +29,7 @@ const userStore = createSlice({
       state.token = action.payload
       localStorage.setItem('token', action.payload)
     },
-    setUserInfo(state, action: PayloadAction<UserInfoItemValue>) {
+    setUserInfo(state, action: PayloadAction<UserInfoItemType>) {
       state.userInfo = action.payload
     },
     setLogout(state) {
@@ -51,7 +51,7 @@ const userStore = createSlice({
 const { setToken, setUserInfo, setLogout } = userStore.actions
 const userReducer = userStore.reducer
 
-const fetchLogin = (loginForm: LoginValue) => {
+const fetchLogin = (loginForm: LoginType) => {
   return async (dispatch: any) => {
     const res = await loginAPI(loginForm)
     dispatch(setToken(res.data.token))

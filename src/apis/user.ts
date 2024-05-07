@@ -1,8 +1,8 @@
-import { LoginValue, ResValue, UserInfoItemValue } from "@/types/models/user";
+import { LoginType, ResType, UserInfoItemType } from "@/types/models/user";
 import { http } from "@/utils";
 
 
-export function loginAPI(formData: LoginValue) {
+export function loginAPI(formData: LoginType) {
   return http({
     url: '/authorizations',
     method: 'POST',
@@ -11,7 +11,7 @@ export function loginAPI(formData: LoginValue) {
 }
 
 export function getUserInfoAPI() {
-  return http<ResValue<UserInfoItemValue>>({
+  return http<ResType<UserInfoItemType>>({
     url: '/user/profile',
     method: 'GET'
   })
