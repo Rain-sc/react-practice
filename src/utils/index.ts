@@ -1,5 +1,5 @@
-import http from './http';
+import { httpInstance } from './http';
 
 export {
-  http
+  httpInstance as http
 }

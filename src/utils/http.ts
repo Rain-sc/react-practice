@@ -2,12 +2,12 @@ import router from "@/router";
 import { links } from "@/router/links";
 import axios from "axios";
 
-const http = axios.create({
+const httpInstance = axios.create({
   baseURL: 'http://geek.itheima.net/v1_0',
   timeout: 5000
 })
 
-http.interceptors.request.use(
+httpInstance.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token')
     if (token) config.headers.Authorization = `Bearer ${token}`
@@ -18,7 +18,7 @@ http.interceptors.request.use(
   }
 )
 
-http.interceptors.response.use(
+httpInstance.interceptors.response.use(
   (response) => {
     return response.data
   },
@@ -32,4 +32,4 @@ http.interceptors.response.use(
   }
 )
 
-export default http
+export { httpInstance }

@@ -2,15 +2,15 @@ export type AritcleParamType = {
   begin_pubdate?: string;
   channel_id?: string;
   end_pubdate?: string;
-  page?: string;
-  per_page?: string;
+  page?: number;
+  per_page?: number;
   status?: string;
 }
 
 export type AritcleListResType = {
-  page: null
-  per_page: null
-  result: ResultType[],
+  page: number | null
+  per_page: number | null
+  results: ResultType[],
   total_count: number
 }
 
