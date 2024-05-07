@@ -29,3 +29,4 @@ export type CoverType = {
   images: string[]
   type: number
 }
+

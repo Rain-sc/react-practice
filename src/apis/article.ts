@@ -9,3 +9,9 @@ export function getAricleListAPI(params: AritcleParamType) {
   })
 }
 
+export function delAricleAPI(articleId: string) {
+  return http.request({
+    url: `/mp/articles/${articleId}`,
+    method: 'DELETE'
+  })
+}

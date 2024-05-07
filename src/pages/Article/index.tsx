@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom'
-import { Card, Breadcrumb, Form, Button, Radio, DatePicker, Select, Table, Space, Tag } from 'antd'
+import { Card, Breadcrumb, Form, Button, Radio, DatePicker, Select, Table, Space, Tag, Popconfirm, message } from 'antd'
 import locale from 'antd/es/date-picker/locale/en_US'
 import { links } from '@/router/links'
 import { } from 'react-redux'
 import { useEffect, useState } from 'react'
-import { getAricleListAPI } from '@/apis/article'
+import { delAricleAPI, getAricleListAPI } from '@/apis/article'
 import { ResultType, AritcleParamType } from '@/types/models/article'
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
 import img404 from '@/assets/images/article/error.png'
@@ -23,7 +23,7 @@ const Article = () => {
   }
   const columns: ColumnsType = [
     {
-      title: '封面',
+      title: 'cover',
       dataIndex: 'cover',
       width: 120,
       render: cover => {
@@ -31,43 +31,51 @@ const Article = () => {
       }
     },
     {
-      title: '标题',
+      title: 'title',
       dataIndex: 'title',
       width: 220
     },
     {
-      title: '状态',
+      title: 'status',
       dataIndex: 'status',
       render: data => status[data]
     },
     {
-      title: '发布时间',
+      title: 'publish date',
       dataIndex: 'pubdate'
     },
     {
-      title: '阅读数',
+      title: 'read',
       dataIndex: 'read_count'
     },
     {
-      title: '评论数',
+      title: 'comment',
       dataIndex: 'comment_count'
     },
     {
-      title: '点赞数',
+      title: 'like',
       dataIndex: 'like_count'
     },
     {
-      title: '操作',
+      title: 'action',
       render: data => {
         return (
           <Space size="middle">
             <Button type="primary" shape="circle" icon={<EditOutlined />} />
-            <Button
-              type="primary"
-              danger
-              shape="circle"
-              icon={<DeleteOutlined />}
-            />
+            <Popconfirm
+              title="Delete the article"
+              description="Are you sure to delete this article?"
+              onConfirm={() => onDeleteConfirm(data)}
+              okText="Yes"
+              cancelText="No"
+            >
+              <Button
+                type="primary"
+                danger
+                shape="circle"
+                icon={<DeleteOutlined />}
+              />
+            </Popconfirm>
           </Space>
         )
       }
@@ -75,7 +83,7 @@ const Article = () => {
   ]
 
   const [arircleList, setArticleList] = useState<ResultType[]>([])
-  const [reqDate, setReqDate] = useState<AritcleParamType>({
+  const [reqData, setReqData] = useState<AritcleParamType>({
     status: '',
     channel_id: '',
     begin_pubdate: '',
@@ -88,7 +96,7 @@ const Article = () => {
   useEffect(() => {
     async function getArticleList() {
       try {
-        const res = await getAricleListAPI(reqDate)
+        const res = await getAricleListAPI(reqData)
         setArticleList(res.data.results)
         setTotalCount(res.data.total_count)
       } catch (error) {
@@ -96,7 +104,20 @@ const Article = () => {
       }
     }
     getArticleList()
-  }, [reqDate])
+  }, [reqData])
+
+  const onDeleteConfirm = async ({ id }: { id: string }) => {
+    try {
+      await delAricleAPI(id)
+      message.success('delete article success')
+      setReqData({
+        ...reqData
+      })
+    } catch (error) {
+      throw new Error('delete article error')
+    }
+  }
+
   return (
     <div>
       <Card
