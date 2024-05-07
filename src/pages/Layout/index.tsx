@@ -9,9 +9,9 @@ import {
 import { Layout, Menu, Popconfirm } from 'antd'
 import './index.scss'
 import { useEffect } from "react"
-import { useDispatch } from "react-redux"
 import { UserStoreValue, fetchUserInfo, setLogout } from "@/store/modules/user"
 import { useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 const { Header, Sider } = Layout
 
 const siderItems = [
@@ -42,12 +42,17 @@ const MainLayout = () => {
     dispatch(setLogout())
     navigate(links.login)
   }
+
   const onMenuClick = ({ key }: { key: string }) => {
     navigate(key)
   }
+
   useEffect(() => {
+
     dispatch(fetchUserInfo())
+
   }, [dispatch])
+
   return (
     <Layout className="h-full">
       <Header className="header">

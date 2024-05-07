@@ -61,7 +61,7 @@ const fetchLogin = (loginForm: LoginValue) => {
 const fetchUserInfo = () => {
   return async (dispatch: any) => {
     const res = await getUserInfoAPI()
-    dispatch(setUserInfo(res.data.data))
+    dispatch(setUserInfo(res.data))
   }
 }
 export {

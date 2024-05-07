@@ -1,3 +1,5 @@
+import router from "@/router";
+import { links } from "@/router/links";
 import axios from "axios";
 
 const http = axios.create({
@@ -21,6 +23,11 @@ http.interceptors.response.use(
     return response.data
   },
   (error) => {
+    if (error.response.status === 401) {
+      localStorage.removeItem('token')
+      router.navigate(links.login)
+      window.location.reload()
+    }
     return Promise.reject(error)
   }
 )
