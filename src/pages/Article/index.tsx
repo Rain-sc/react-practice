@@ -97,8 +97,9 @@ const Article = () => {
     async function getArticleList() {
       try {
         const res = await getAricleListAPI(reqData)
-        setArticleList(res.data.results)
-        setTotalCount(res.data.total_count)
+        const resData = res.data
+        setArticleList(resData.data.results)
+        setTotalCount(resData.data.total_count)
       } catch (error) {
         throw new Error('get article list error')
       }

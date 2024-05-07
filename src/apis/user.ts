@@ -11,7 +11,7 @@ export function loginAPI(formData: LoginType) {
 }
 
 export function getUserInfoAPI() {
-  return http<UserInfoItemType>({
+  return http<ResType<UserInfoItemType>>({
     url: '/user/profile',
     method: 'GET'
   })
