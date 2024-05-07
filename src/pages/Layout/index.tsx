@@ -26,7 +26,7 @@ const siderItems = [
     icon: <DiffOutlined />
   },
   {
-    label: 'Create',
+    label: 'Publish',
     key: links.publish,
     icon: <EditOutlined />
   },
