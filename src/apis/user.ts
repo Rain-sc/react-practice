@@ -10,8 +10,8 @@ export function loginAPI(formData: LoginType) {
   })
 }
 
-export function getUserInfoAPI() {
-  return http<ResType<UserInfoItemType>>({
+export function getUserInfoAPI(): Promise<ResType<UserInfoItemType>> {
+  return http({
     url: '/user/profile',
     method: 'GET'
   })
