@@ -30,3 +30,11 @@ export type CoverType = {
   type: number
 }
 
+export type ChannelItemType = {
+  id: number
+  name: string
+}
+
+export type ChannelResType = {
+  channels: ChannelItemType[]
+}

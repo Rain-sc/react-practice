@@ -9,6 +9,7 @@ import { ResultType, AritcleParamType } from '@/types/models/article'
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
 import img404 from '@/assets/images/article/error.png'
 import { ColumnsType } from 'antd/es/table'
+import { useChannelList } from '@/hooks/useChannelList'
 const { Option } = Select
 const { RangePicker } = DatePicker
 
@@ -119,6 +120,8 @@ const Article = () => {
     }
   }
 
+  const { channelList } = useChannelList()
+
   return (
     <div>
       <Card
@@ -142,11 +145,12 @@ const Article = () => {
           <Form.Item label="channel" name="channel_id">
             <Select
               placeholder="Select channel"
-              defaultValue="lucy"
               style={{ width: 120 }}
             >
-              <Option value="jack">Jack</Option>
-              <Option value="lucy">Lucy</Option>
+              {channelList.map(item => (
+                <Option value={item.id} key={item.id}>{item.name}</Option>
+              ))}
+
             </Select>
           </Form.Item>
 

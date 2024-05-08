@@ -15,10 +15,12 @@ import './index.scss'
 import { links } from "@/router/links"
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
+import { useChannelList } from '@/hooks/useChannelList'
 
 const { Option } = Select
 
 const Publish = () => {
+  const { channelList } = useChannelList()
   return (
     <div className="publish">
       <Card
@@ -50,7 +52,9 @@ const Publish = () => {
             rules={[{ required: true, message: 'Please select article channel' }]}
           >
             <Select placeholder="Please select article channel" className='w-full max-w-[400px]'>
-              <Option value={0}>recommend</Option>
+              {channelList.map(item => (
+                <Option key={item.id} value={item.id}>{item.name}</Option>
+              ))}
             </Select>
           </Form.Item>
           <Form.Item
