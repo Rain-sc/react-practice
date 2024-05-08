@@ -38,3 +38,13 @@ export type ChannelItemType = {
 export type ChannelResType = {
   channels: ChannelItemType[]
 }
+
+export type ArticlePublishType = {
+  title: string
+  content: string
+  cover: {
+    type: number
+    images: string[]
+  }
+  channel_id: string
+}

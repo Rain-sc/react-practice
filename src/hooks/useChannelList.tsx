@@ -14,7 +14,7 @@ const useChannelList = () => {
       }
     }
     getChannelList()
-  })
+  }, [])
   return {
     channelList
   }
