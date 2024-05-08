@@ -135,7 +135,7 @@ const Article = () => {
       ...reqData,
       status,
       channel_id,
-      begin_pubdate: date ? date[0].format!('YYYY-MM-DD') : '',
+      begin_pubdate: date ? date[0].format('YYYY-MM-DD') : '',
       end_pubdate: date ? date[1].format('YYYY-MM-DD') : ''
     })
   }

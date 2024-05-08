@@ -5,6 +5,12 @@ export type AritcleParamType = {
   page?: number;
   per_page?: number;
   status?: string;
+  date?: MomentFormatType[]
+
+}
+
+type MomentFormatType = {
+  format(...args: string[]): string
 }
 
 export type AritcleListResType = {
