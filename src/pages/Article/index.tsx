@@ -122,6 +122,17 @@ const Article = () => {
 
   const { channelList } = useChannelList()
 
+  const onSearchList = (values: AritcleParamType) => {
+
+    const { status, channel_id, date } = values
+    setReqData({
+      ...reqData,
+      status,
+      channel_id,
+      begin_pubdate: date ? date[0].format('YYYY-MM-DD') : '',
+      end_pubdate: date ? date[1].format('YYYY-MM-DD') : ''
+    })
+  }
   return (
     <div>
       <Card
@@ -133,11 +144,18 @@ const Article = () => {
         }
         style={{ marginBottom: 20 }}
       >
-        <Form initialValues={{ status: '' }}>
+        <Form
+          onFinish={onSearchList}
+          initialValues={{
+            status: 1
+          }}
+          labelCol={{ span: 3 }}
+          labelAlign="left"
+
+        >
           <Form.Item label="status" name="status">
-            <Radio.Group>
-              <Radio value={''}>All</Radio>
-              <Radio value={0}>Draft</Radio>
+            <Radio.Group value={1}>
+              <Radio value={1}>Waiting</Radio>
               <Radio value={2}>Passed</Radio>
             </Radio.Group>
           </Form.Item>
@@ -145,7 +163,7 @@ const Article = () => {
           <Form.Item label="channel" name="channel_id">
             <Select
               placeholder="Select channel"
-              style={{ width: 120 }}
+              className='w-full max-w-[250px]'
             >
               {channelList.map(item => (
                 <Option value={item.id} key={item.id}>{item.name}</Option>
@@ -159,7 +177,10 @@ const Article = () => {
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit" style={{ marginLeft: 40 }}>
+            <Button
+              type="primary"
+              htmlType="submit"
+              style={{ marginLeft: 40 }}>
               Search
             </Button>
           </Form.Item>
