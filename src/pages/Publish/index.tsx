@@ -11,7 +11,7 @@ import {
   message
 } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
-import { Link, useSearchParams } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import './index.scss'
 import { links } from "@/router/links"
 import ReactQuill from 'react-quill'
@@ -25,8 +25,11 @@ import type { UploadProps, UploadFile } from 'antd';
 const { Option } = Select
 
 const Publish = () => {
+  const navigate = useNavigate()
+  const [queryParams] = useSearchParams()
   const { channelList } = useChannelList()
   const [form] = Form.useForm()
+
   const onPublish = async (values: ArticlePublishType) => {
 
     if ((selectImageType === 1 && imageList.length === 0) || (selectImageType === 3 && imageList.length < 3))
@@ -48,10 +51,14 @@ const Publish = () => {
     try {
       if (articleId) {
         await editAricleByIdAPI({ ...params, id: articleId })
+        message.success(`Edit success`)
+        navigate(links.article)
+
       } else {
         await addAricleAPI(params)
+        message.success(`Publish success`)
       }
-      message.success('Publish success')
+
       setImageList([])
       setSelectImageType(0)
       form.setFieldValue('type', 0)
@@ -63,8 +70,6 @@ const Publish = () => {
 
   const [imageList, setImageList] = useState<UploadFile[]>([])
   const onUploadImage: UploadProps['onChange'] = ({ fileList: newFileList }) => {
-    console.log("newFileList", newFileList);
-
     setImageList(newFileList)
   }
 
@@ -76,25 +81,20 @@ const Publish = () => {
     }
   }
 
-  const [params] = useSearchParams()
-  const articleId = params.get('id')!
+  const articleId = queryParams.get('id')!
   useEffect(() => {
     const getAritcleDetail = async () => {
       try {
         const res = await getAricleByIdAPI(articleId)
-        const { title, channel_id, content, cover } = res.data
+        const resData = res.data
         form.setFieldsValue({
-          title,
-          channel_id,
-          content,
-          cover: {
-            type: cover.type,
-          }
+          ...resData,
+          type: resData.cover.type,
         })
-        setSelectImageType(cover.type)
 
+        setSelectImageType(resData.cover.type)
 
-        const coverUrl = cover.images.map(item => {
+        const coverUrl = resData.cover.images.map(item => {
           return {
             url: item
           }
