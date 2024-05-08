@@ -43,8 +43,8 @@ const Publish = () => {
       message.success('Publish success')
       setImageList([])
       setSelectImageType(0)
+      form.setFieldValue('type', 0)
       form.resetFields()
-      // form.setFieldValue('type', 0)
     } catch (error) {
       throw new Error('Publish failed')
     }
@@ -79,6 +79,9 @@ const Publish = () => {
           labelAlign="left"
           onFinish={onPublish}
           form={form}
+          initialValues={{
+            type: selectImageType
+          }}
         >
           <Form.Item
             label="Title"
@@ -100,7 +103,7 @@ const Publish = () => {
           </Form.Item>
           <Form.Item label="Image">
             <Form.Item name="type">
-              <Radio.Group onChange={onSelectImageType} defaultValue={0}>
+              <Radio.Group onChange={onSelectImageType} defaultValue={selectImageType} value={selectImageType}>
                 <Radio value={1}>Single</Radio>
                 <Radio value={3}>Triple</Radio>
                 <Radio value={0}>None</Radio>
