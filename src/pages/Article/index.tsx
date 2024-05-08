@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Card, Breadcrumb, Form, Button, Radio, DatePicker, Select, Table, Space, Tag, Popconfirm, message, Pagination } from 'antd'
 import locale from 'antd/es/date-picker/locale/en_US'
 import { links } from '@/router/links'
@@ -65,7 +65,7 @@ const Article = () => {
       render: data => {
         return (
           <Space size="middle">
-            <Button type="primary" shape="circle" icon={<EditOutlined />} />
+            <Button type="primary" shape="circle" icon={<EditOutlined />} onClick={() => onEditArticle(data)} />
             <Popconfirm
               title="Delete the article"
               description="Are you sure to delete this article?"
@@ -135,7 +135,7 @@ const Article = () => {
       ...reqData,
       status,
       channel_id,
-      begin_pubdate: date ? date[0].format('YYYY-MM-DD') : '',
+      begin_pubdate: date ? date[0].format!('YYYY-MM-DD') : '',
       end_pubdate: date ? date[1].format('YYYY-MM-DD') : ''
     })
   }
@@ -145,6 +145,11 @@ const Article = () => {
       ...reqData,
       page,
     })
+  }
+
+  const navigate = useNavigate()
+  const onEditArticle = (data: ResultType) => {
+    navigate(`/publish?id=${data.id}`)
   }
   return (
     <div>

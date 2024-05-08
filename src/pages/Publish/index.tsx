@@ -11,15 +11,15 @@ import {
   message
 } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import './index.scss'
 import { links } from "@/router/links"
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
 import { useChannelList } from '@/hooks/useChannelList'
-import { addAricleAPI } from '@/apis/article'
+import { addAricleAPI, editAricleByIdAPI, getAricleByIdAPI } from '@/apis/article'
 import { ArticlePublishType } from '@/types/models/article'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { UploadProps, UploadFile } from 'antd';
 
 const { Option } = Select
@@ -39,11 +39,18 @@ const Publish = () => {
       title,
       cover: {
         type: selectImageType,
-        images: imageList.map(item => item.response.data.url)
+        images: imageList.map(item => {
+          if (item.response) return item.response.data.url
+          return item.url
+        })
       }
     }
     try {
-      await addAricleAPI(params)
+      if (articleId) {
+        await editAricleByIdAPI({ ...params, id: articleId })
+      } else {
+        await addAricleAPI(params)
+      }
       message.success('Publish success')
       setImageList([])
       setSelectImageType(0)
@@ -56,6 +63,8 @@ const Publish = () => {
 
   const [imageList, setImageList] = useState<UploadFile[]>([])
   const onUploadImage: UploadProps['onChange'] = ({ fileList: newFileList }) => {
+    console.log("newFileList", newFileList);
+
     setImageList(newFileList)
   }
 
@@ -66,6 +75,39 @@ const Publish = () => {
       setImageList([])
     }
   }
+
+  const [params] = useSearchParams()
+  const articleId = params.get('id')!
+  useEffect(() => {
+    const getAritcleDetail = async () => {
+      try {
+        const res = await getAricleByIdAPI(articleId)
+        const { title, channel_id, content, cover } = res.data
+        form.setFieldsValue({
+          title,
+          channel_id,
+          content,
+          cover: {
+            type: cover.type,
+          }
+        })
+        setSelectImageType(cover.type)
+
+
+        const coverUrl = cover.images.map(item => {
+          return {
+            url: item
+          }
+        })
+        setImageList(coverUrl as UploadFile[])
+
+      } catch (error) {
+        throw new Error('get aitcle detail error')
+      }
+    }
+    if (!articleId) return
+    getAritcleDetail()
+  }, [articleId])
   return (
     <div className="publish">
       <Card
