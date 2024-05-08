@@ -30,7 +30,7 @@ const Publish = () => {
   const onPublish = async (values: ArticlePublishType) => {
 
     if ((selectImageType === 1 && imageList.length === 0) || (selectImageType === 3 && imageList.length < 3))
-      return message.warning(`Please upload ${selectImageType} cover image`)
+      return message.error(`Please upload ${selectImageType} cover image`)
 
     const { content, channel_id, title } = values
     const params = {
