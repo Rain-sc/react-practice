@@ -28,6 +28,10 @@ const Publish = () => {
   const { channelList } = useChannelList()
   const [form] = Form.useForm()
   const onPublish = async (values: ArticlePublishType) => {
+
+    if ((selectImageType === 1 && imageList.length === 0) || (selectImageType === 3 && imageList.length < 3))
+      return message.warning(`Please upload ${selectImageType} cover image`)
+
     const { content, channel_id, title } = values
     const params = {
       content,
@@ -103,7 +107,7 @@ const Publish = () => {
           </Form.Item>
           <Form.Item label="Image">
             <Form.Item name="type">
-              <Radio.Group onChange={onSelectImageType} defaultValue={selectImageType} value={selectImageType}>
+              <Radio.Group onChange={onSelectImageType} value={selectImageType}>
                 <Radio value={1}>Single</Radio>
                 <Radio value={3}>Triple</Radio>
                 <Radio value={0}>None</Radio>
@@ -118,6 +122,7 @@ const Publish = () => {
                 onChange={onUploadImage}
                 maxCount={selectImageType}
                 fileList={imageList}
+                accept='image/*'
               >
                 {((selectImageType === 1 && imageList.length < 1) || (selectImageType === 3 && imageList.length < 3))
                   && <div style={{ marginTop: 8 }}>
