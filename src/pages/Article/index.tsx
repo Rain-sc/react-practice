@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Card, Breadcrumb, Form, Button, Radio, DatePicker, Select, Table, Space, Tag, Popconfirm, message } from 'antd'
+import { Card, Breadcrumb, Form, Button, Radio, DatePicker, Select, Table, Space, Tag, Popconfirm, message, Pagination } from 'antd'
 import locale from 'antd/es/date-picker/locale/en_US'
 import { links } from '@/router/links'
 import { } from 'react-redux'
@@ -10,6 +10,8 @@ import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
 import img404 from '@/assets/images/article/error.png'
 import { ColumnsType } from 'antd/es/table'
 import { useChannelList } from '@/hooks/useChannelList'
+import type { PaginationProps } from 'antd';
+
 const { Option } = Select
 const { RangePicker } = DatePicker
 
@@ -18,6 +20,7 @@ const Article = () => {
     [key: number]: JSX.Element;
   }
 
+  const [loading, setLoading] = useState(false);
   const status: StatusType = {
     1: <Tag color='warning'>Waiting</Tag>,
     2: <Tag color='success'>Passed</Tag>
@@ -97,12 +100,15 @@ const Article = () => {
   useEffect(() => {
     async function getArticleList() {
       try {
+        setLoading(true)
         const res = await getAricleListAPI(reqData)
         const resData = res.data
         setArticleList(resData.results)
         setTotalCount(resData.total_count)
       } catch (error) {
         throw new Error('get article list error')
+      } finally {
+        setLoading(false)
       }
     }
     getArticleList()
@@ -131,6 +137,13 @@ const Article = () => {
       channel_id,
       begin_pubdate: date ? date[0].format('YYYY-MM-DD') : '',
       end_pubdate: date ? date[1].format('YYYY-MM-DD') : ''
+    })
+  }
+
+  const onPaginationChange: PaginationProps['onShowSizeChange'] = (page) => {
+    setReqData({
+      ...reqData,
+      page,
     })
   }
   return (
@@ -190,6 +203,15 @@ const Article = () => {
         <Table
           dataSource={arircleList}
           columns={columns}
+          loading={loading}
+          pagination={
+            {
+              current: reqData.page,
+              pageSize: reqData.per_page,
+              total: totalCount,
+              onChange: onPaginationChange
+            }
+          }
         />
       </Card>
     </div>
