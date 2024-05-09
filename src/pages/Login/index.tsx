@@ -6,6 +6,8 @@ import { useNavigate } from 'react-router-dom';
 import { links } from '@/router/links';
 import { useDispatch } from 'react-redux';
 import { fetchLogin } from '@/store/modules/user';
+import useAnimation from '@/hooks/useAnimation';
+import logoAnimation from '@/assets/images/login/react-logo.json'
 
 const Login = () => {
   const [loading, setLoading] = useState<boolean>(false)
@@ -26,6 +28,8 @@ const Login = () => {
     }
 
   }
+
+  const logo = useAnimation(logoAnimation)
   return (
     <div className="relative">
       <div className="absolute inset-x-0 -top-48 -bottom-14 overflow-hidden bg-indigo-50">
@@ -53,9 +57,11 @@ const Login = () => {
                   padding: '2.375rem 1rem 3rem',
                 }}
               >
-                <div className="p-8 space-y-4 md:space-y-6 md:p-10">
-
-                  <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl text-left text-opacity-30 tracking-wide">
+                <div className="px-8 space-y-4 md:space-y-6 ">
+                  <div className='h-[80px] flex justify-center'>
+                    {logo}
+                  </div>
+                  <h1 className="text-xl text-center font-bold leading-tight tracking-tight text-gray-900 md:text-2xl text-left text-opacity-30 tracking-wide">
                     Login
                   </h1>
                   <Form

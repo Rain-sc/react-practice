@@ -10,8 +10,11 @@ import { Layout, Menu, Popconfirm } from 'antd'
 import './index.scss'
 import { useEffect } from "react"
 import { UserStoreType, fetchUserInfo, setLogout } from "@/store/modules/user"
-import { useSelector } from "react-redux"
-import { useDispatch } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
+import logoAnimation from '@/assets/images/login/react-logo.json'
+import useAnimation from "@/hooks/useAnimation"
+
+
 const { Header, Sider } = Layout
 
 const siderItems = [
@@ -48,15 +51,17 @@ const MainLayout = () => {
   }
 
   useEffect(() => {
-
     dispatch(fetchUserInfo())
-
   }, [dispatch])
+
+  const logo = useAnimation(logoAnimation)
 
   return (
     <Layout className="h-full">
       <Header className="header">
-        <div className="logo" />
+        <div className="logo">
+          {logo}
+        </div>
         <div className="user-info">
           <span className="user-name">{userInfo.name}</span>
           <span className="user-logout">
