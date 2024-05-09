@@ -1,6 +1,6 @@
 import { getUserInfoAPI, getUserProfileAPI, loginAPI } from "@/apis/user"
 import { LoginType, UserInfoItemType, UserProfileItemType } from "@/types/models/user"
-import { PayloadAction, createSlice } from "@reduxjs/toolkit"
+import { Dispatch, PayloadAction, createSlice } from "@reduxjs/toolkit"
 
 export type UserType = {
   token: string
@@ -79,14 +79,14 @@ const fetchLogin = (loginForm: LoginType) => {
 }
 
 const fetchUserProfile = () => {
-  return async (dispatch: any) => {
+  return async (dispatch: Dispatch) => {
     const res = await getUserProfileAPI()
     dispatch(setUserProfile(res.data))
   }
 }
 
 const fetchUserInfo = () => {
-  return async (dispatch: any) => {
+  return async (dispatch: Dispatch) => {
     const res = await getUserInfoAPI()
     dispatch(setUserInfo(res.data))
   }

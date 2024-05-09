@@ -10,9 +10,10 @@ import { Layout, Menu, Popconfirm } from 'antd'
 import './index.scss'
 import { useEffect } from "react"
 import { UserStoreType, fetchUserInfo, fetchUserProfile, setLogout } from "@/store/modules/user"
-import { useSelector, useDispatch } from "react-redux"
+import { useSelector } from "react-redux"
 import logoAnimation from '@/assets/images/login/react-logo.json'
 import useAnimation from "@/hooks/useAnimation"
+import { useAppDispatch } from "@/store"
 
 
 const { Header, Sider } = Layout
@@ -38,7 +39,7 @@ const siderItems = [
 const MainLayout = () => {
   const { pathname } = useLocation()
   const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const userProfile = useSelector((state: UserStoreType) => state.user.userProfile)
 
   const onLogout = () => {

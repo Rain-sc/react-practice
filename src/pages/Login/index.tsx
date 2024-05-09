@@ -4,15 +4,15 @@ import loginBg from '@/assets/images/login/login-bg.png';
 import { LoginType } from '@/types/models/user';
 import { useNavigate } from 'react-router-dom';
 import { links } from '@/router/links';
-import { useDispatch } from 'react-redux';
 import { fetchLogin } from '@/store/modules/user';
 import useAnimation from '@/hooks/useAnimation';
 import logoAnimation from '@/assets/images/login/react-logo.json'
+import { useAppDispatch } from '@/store';
 
 const Login = () => {
   const [loading, setLoading] = useState<boolean>(false)
   const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
 
   const onFinish = async (values: LoginType) => {
@@ -22,7 +22,7 @@ const Login = () => {
       navigate(links.dashboard)
       message.success('Login success !')
     } catch (error) {
-      message.error('Login faild!')
+      message.error('Login faild !')
       throw new Error('login faild')
     } finally {
       setLoading(false)
