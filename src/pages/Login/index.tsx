@@ -20,8 +20,9 @@ const Login = () => {
       setLoading(true)
       await dispatch(fetchLogin(values))
       navigate(links.dashboard)
-      message.success('Lgoin success!')
+      message.success('Login success !')
     } catch (error) {
+      message.error('Login faild!')
       throw new Error('login faild')
     } finally {
       setLoading(false)
@@ -138,7 +139,6 @@ const Login = () => {
                       </Button>
                     </div>
                   </Form>
-
                 </div>
               </div>
             </div>

@@ -1,17 +1,18 @@
-import { getUserInfoAPI, loginAPI } from "@/apis/user"
-import { LoginType, UserInfoItemType } from "@/types/models/user"
+import { getUserInfoAPI, getUserProfileAPI, loginAPI } from "@/apis/user"
+import { LoginType, UserInfoItemType, UserProfileItemType } from "@/types/models/user"
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 
 export type UserType = {
-  token: string;
-  userInfo: UserInfoItemType
+  token: string
+  userProfile: UserProfileItemType
+  useInfo: UserInfoItemType
 }
 export type UserStoreType = {
   user: UserType
 }
 const initialState: UserType = {
   token: localStorage.getItem('token') || '',
-  userInfo: {
+  userProfile: {
     birthday: '',
     gender: 0,
     id: '',
@@ -19,6 +20,16 @@ const initialState: UserType = {
     mobile: '',
     name: '',
     photo: '',
+  },
+  useInfo: {
+    id: '',
+    name: '',
+    photo: '',
+    intro: null,
+    art_count: 0,
+    follow_count: 0,
+    fans_count: 0,
+    like_count: 0
   }
 }
 const userStore = createSlice({
@@ -29,12 +40,12 @@ const userStore = createSlice({
       state.token = action.payload
       localStorage.setItem('token', action.payload)
     },
-    setUserInfo(state, action: PayloadAction<UserInfoItemType>) {
-      state.userInfo = action.payload
+    setUserProfile(state, action: PayloadAction<UserProfileItemType>) {
+      state.userProfile = action.payload
     },
     setLogout(state) {
       state.token = ''
-      state.userInfo = {
+      state.userProfile = {
         birthday: '',
         gender: 0,
         id: '',
@@ -44,11 +55,20 @@ const userStore = createSlice({
         photo: '',
       }
       localStorage.removeItem('token')
+    },
+    setUserInfo(state, action: PayloadAction<UserInfoItemType>) {
+      state.useInfo = action.payload
     }
   }
 })
 
-const { setToken, setUserInfo, setLogout } = userStore.actions
+const {
+  setToken,
+  setUserProfile,
+  setLogout,
+  setUserInfo
+} = userStore.actions
+
 const userReducer = userStore.reducer
 
 const fetchLogin = (loginForm: LoginType) => {
@@ -58,16 +78,25 @@ const fetchLogin = (loginForm: LoginType) => {
   }
 }
 
+const fetchUserProfile = () => {
+  return async (dispatch: any) => {
+    const res = await getUserProfileAPI()
+    dispatch(setUserProfile(res.data))
+  }
+}
+
 const fetchUserInfo = () => {
   return async (dispatch: any) => {
     const res = await getUserInfoAPI()
     dispatch(setUserInfo(res.data))
   }
 }
+
 export {
   fetchLogin,
-  fetchUserInfo,
-  setLogout
+  fetchUserProfile,
+  setLogout,
+  fetchUserInfo
 }
 
 export default userReducer

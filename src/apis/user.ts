@@ -1,4 +1,4 @@
-import { LoginType, ResType, UserInfoItemType } from "@/types/models/user";
+import { LoginType, ResType, UserInfoItemType, UserProfileItemType } from "@/types/models/user";
 import { http } from "@/utils";
 
 
@@ -10,9 +10,16 @@ export function loginAPI(formData: LoginType) {
   })
 }
 
-export function getUserInfoAPI(): Promise<ResType<UserInfoItemType>> {
+export function getUserProfileAPI(): Promise<ResType<UserProfileItemType>> {
   return http({
     url: '/user/profile',
+    method: 'GET'
+  })
+}
+
+export function getUserInfoAPI(): Promise<ResType<UserInfoItemType>> {
+  return http({
+    url: '/user',
     method: 'GET'
   })
 }

@@ -9,7 +9,7 @@ import {
 import { Layout, Menu, Popconfirm } from 'antd'
 import './index.scss'
 import { useEffect } from "react"
-import { UserStoreType, fetchUserInfo, setLogout } from "@/store/modules/user"
+import { UserStoreType, fetchUserInfo, fetchUserProfile, setLogout } from "@/store/modules/user"
 import { useSelector, useDispatch } from "react-redux"
 import logoAnimation from '@/assets/images/login/react-logo.json'
 import useAnimation from "@/hooks/useAnimation"
@@ -39,7 +39,7 @@ const MainLayout = () => {
   const { pathname } = useLocation()
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const userInfo = useSelector((state: UserStoreType) => state.user.userInfo)
+  const userProfile = useSelector((state: UserStoreType) => state.user.userProfile)
 
   const onLogout = () => {
     dispatch(setLogout())
@@ -51,6 +51,7 @@ const MainLayout = () => {
   }
 
   useEffect(() => {
+    dispatch(fetchUserProfile())
     dispatch(fetchUserInfo())
   }, [dispatch])
 
@@ -63,7 +64,7 @@ const MainLayout = () => {
           {logo}
         </div>
         <div className="user-info">
-          <span className="user-name">{userInfo.name}</span>
+          <span className="user-name">{userProfile.name}</span>
           <span className="user-logout">
             <Popconfirm title="Are you logout?" okText="Yes" cancelText="No" onConfirm={onLogout}>
               <LogoutOutlined /> Logout

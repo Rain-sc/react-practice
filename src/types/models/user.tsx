@@ -7,7 +7,7 @@ export type LoginType = {
   code: string
 }
 
-export type UserInfoItemType = {
+export type UserProfileItemType = {
   birthday: string;
   gender: number;
   id: string;
@@ -17,4 +17,13 @@ export type UserInfoItemType = {
   photo: string;
 }
 
-
+export type UserInfoItemType = {
+  id: string
+  name: string
+  photo: string
+  intro: string | null
+  art_count: number
+  follow_count: number
+  fans_count: number
+  like_count: number
+}
