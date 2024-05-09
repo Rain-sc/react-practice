@@ -165,14 +165,14 @@ const Article = () => {
         <Form
           onFinish={onSearchList}
           initialValues={{
-            status: 1
+            status: 2
           }}
           labelCol={{ span: 3 }}
           labelAlign="left"
 
         >
           <Form.Item label="status" name="status">
-            <Radio.Group value={1}>
+            <Radio.Group value={2}>
               <Radio value={1}>Waiting</Radio>
               <Radio value={2}>Passed</Radio>
             </Radio.Group>
@@ -209,6 +209,7 @@ const Article = () => {
           dataSource={arircleList}
           columns={columns}
           loading={loading}
+          rowKey="id"
           pagination={
             {
               current: reqData.page,
