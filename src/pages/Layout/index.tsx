@@ -83,7 +83,7 @@ const MainLayout = () => {
             items={siderItems}
             style={{ height: '100%', borderRight: 0 }}></Menu>
         </Sider>
-        <Layout className="layout-content p-5">
+        <Layout className="layout-content p-5 bg-[#f0f2f5]">
           <Outlet />
         </Layout>
       </Layout>
