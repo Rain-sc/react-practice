@@ -23,3 +23,10 @@ export function getUserInfoAPI(): Promise<ResType<UserInfoItemType>> {
     method: 'GET'
   })
 }
+
+export function getFollowersAPI() {
+  return http({
+    url: '/user/followers',
+    method: 'GET'
+  })
+}
