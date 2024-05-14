@@ -35,3 +35,19 @@ export type UserInfoResType = {
   fans_count: number
   like_count: number
 }
+
+
+export type FollerResType = {
+  total_count: number
+  page: number
+  per_page: number
+  results: FollerItemType[]
+}
+
+export type FollerItemType = {
+  id: string
+  name: string
+  photo: string
+  fans_count: number
+  mutual_follow: boolean
+}
