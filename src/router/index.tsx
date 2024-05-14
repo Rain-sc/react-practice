@@ -7,7 +7,7 @@ import { createBrowserRouter } from "react-router-dom";
 import { links } from "./links";
 import Redirect from "@/pages/Dashboard/Redirect";
 import RequiredAuth from "./requireAuth";
-import Profile from "@/pages/profile";
+import Profile from "@/pages/Profile";
 
 const router = createBrowserRouter([
   {

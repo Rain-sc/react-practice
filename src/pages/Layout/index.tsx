@@ -59,19 +59,7 @@ const MainLayout = () => {
   useEffect(() => {
     dispatch(fetchUserProfile())
     dispatch(fetchUserInfo())
-    // const updateUserProfile = async () => {
-    //   const param: UserProfilePramsType = {
-    //     name: "rain",
-    //     gender: 0,
-    //     birthday: "1999-10-3",
-    //     real_name: "rain",
-    //     intro: "halo"
-    //   }
-    //   const res = await updateUserProfileAPI(param)
-    //   console.log("res", res.data);
 
-    // }
-    // updateUserProfile()
   }, [dispatch])
 
   const logo = useAnimation(logoAnimation)

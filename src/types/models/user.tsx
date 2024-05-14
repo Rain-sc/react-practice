@@ -12,7 +12,6 @@ export type UserProfilePramsType = {
   gender: number;
   intro: null | string;
   name: string;
-  real_name: string
 }
 
 export type UserProfileResType = {
