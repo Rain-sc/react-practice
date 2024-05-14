@@ -7,7 +7,15 @@ export type LoginType = {
   code: string
 }
 
-export type UserProfileItemType = {
+export type UserProfilePramsType = {
+  birthday: string;
+  gender: number;
+  intro: null | string;
+  name: string;
+  real_name: string
+}
+
+export type UserProfileResType = {
   birthday: string;
   gender: number;
   id: string;
@@ -17,7 +25,7 @@ export type UserProfileItemType = {
   photo: string;
 }
 
-export type UserInfoItemType = {
+export type UserInfoResType = {
   id: string
   name: string
   photo: string

@@ -6,7 +6,6 @@ export type AritcleParamType = {
   per_page?: number;
   status?: string;
   date?: MomentFormatType[]
-
 }
 
 type MomentFormatType = {

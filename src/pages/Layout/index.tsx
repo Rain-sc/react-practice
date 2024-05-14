@@ -5,6 +5,7 @@ import {
   DiffOutlined,
   EditOutlined,
   LogoutOutlined,
+  UserOutlined
 } from '@ant-design/icons'
 import { Layout, Menu, Popconfirm } from 'antd'
 import './index.scss'
@@ -14,7 +15,6 @@ import { useSelector } from "react-redux"
 import logoAnimation from '@/assets/images/login/react-logo.json'
 import useAnimation from "@/hooks/useAnimation"
 import { useAppDispatch } from "@/store"
-
 
 const { Header, Sider } = Layout
 
@@ -34,6 +34,11 @@ const siderItems = [
     key: links.publish,
     icon: <EditOutlined />
   },
+  {
+    label: 'Profile',
+    key: links.profile,
+    icon: <UserOutlined />
+  }
 ]
 
 const MainLayout = () => {
@@ -54,6 +59,19 @@ const MainLayout = () => {
   useEffect(() => {
     dispatch(fetchUserProfile())
     dispatch(fetchUserInfo())
+    // const updateUserProfile = async () => {
+    //   const param: UserProfilePramsType = {
+    //     name: "rain",
+    //     gender: 0,
+    //     birthday: "1999-10-3",
+    //     real_name: "rain",
+    //     intro: "halo"
+    //   }
+    //   const res = await updateUserProfileAPI(param)
+    //   console.log("res", res.data);
+
+    // }
+    // updateUserProfile()
   }, [dispatch])
 
   const logo = useAnimation(logoAnimation)

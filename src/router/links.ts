@@ -5,4 +5,5 @@ export const links = {
   dashboard: '/dashboard',
   article: '/article',
   publish: '/publish',
+  profile: '/profile'
 }

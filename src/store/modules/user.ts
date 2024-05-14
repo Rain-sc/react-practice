@@ -1,11 +1,11 @@
 import { getUserInfoAPI, getUserProfileAPI, loginAPI } from "@/apis/user"
-import { LoginType, UserInfoItemType, UserProfileItemType } from "@/types/models/user"
+import { LoginType, UserInfoResType, UserProfileResType } from "@/types/models/user"
 import { Dispatch, PayloadAction, createSlice } from "@reduxjs/toolkit"
 
 export type UserType = {
   token: string
-  userProfile: UserProfileItemType
-  useInfo: UserInfoItemType
+  userProfile: UserProfileResType
+  useInfo: UserInfoResType
 }
 export type UserStoreType = {
   user: UserType
@@ -40,7 +40,7 @@ const userStore = createSlice({
       state.token = action.payload
       localStorage.setItem('token', action.payload)
     },
-    setUserProfile(state, action: PayloadAction<UserProfileItemType>) {
+    setUserProfile(state, action: PayloadAction<UserProfileResType>) {
       state.userProfile = action.payload
     },
     setLogout(state) {
@@ -56,7 +56,7 @@ const userStore = createSlice({
       }
       localStorage.removeItem('token')
     },
-    setUserInfo(state, action: PayloadAction<UserInfoItemType>) {
+    setUserInfo(state, action: PayloadAction<UserInfoResType>) {
       state.useInfo = action.payload
     }
   }

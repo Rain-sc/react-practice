@@ -11,6 +11,7 @@ const formatter: StatisticProps['formatter'] = (value) => (
 );
 const Dashboard = () => {
   const userInfo = useSelector((state: UserStoreType) => state.user.useInfo)
+
   return (
     <Row gutter={24}>
       <Col span={8}>
@@ -31,6 +32,7 @@ const Dashboard = () => {
       </Col>
     </Row>
   )
+
 }
 
 export default Dashboard
