@@ -24,7 +24,7 @@ const Dashboard = () => {
       <Col span={8}>
         <CardItem
           title="The Number of Follower"
-          value={userInfo.art_count}
+          value={userInfo.fans_count}
           formatter={formatter}
           image={followerIcon}
         />
