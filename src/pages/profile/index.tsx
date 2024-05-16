@@ -160,7 +160,12 @@ const Profile = () => {
           </Col>
           <Col span={24}>
             <Form.Item name="intro" label="Introduction">
-              <Input.TextArea onChange={onIntroductionChange} />
+              <Input.TextArea
+                onChange={onIntroductionChange}
+                showCount
+                maxLength={100}
+                style={{ height: 120, resize: 'none' }}
+              />
             </Form.Item>
           </Col>
         </Row>
