@@ -215,7 +215,8 @@ const Article = () => {
               current: reqData.page,
               pageSize: reqData.per_page,
               total: totalCount,
-              onChange: onPaginationChange
+              onChange: onPaginationChange,
+              showSizeChanger: false
             }
           }
         />
