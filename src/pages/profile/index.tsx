@@ -38,17 +38,19 @@ const Profile = () => {
   const initialFormValues = {
     id: userProfile.id,
     name: userProfile.name,
-    intro: userProfile.intro,
     mobile: userProfile.mobile,
+    birthday: userProfile.birthday ? dayjs(userProfile.birthday) : undefined,
     gender: userProfile.gender,
-    birthday: userProfile.birthday ? dayjs(userProfile.birthday) : undefined
+    intro: userProfile.intro,
   }
+  const [submitIsDisable, setSubmitIsDisable] = useState(true);
 
   const onFinish = async (values: any) => {
     if (submitIsDisable) return
     const { name, intro } = values
     try {
       setSubmitLoading(true)
+      setSubmitIsDisable(true)
       const param: UserProfilePramsType = {
         name: name,
         gender: genderType,
@@ -66,10 +68,9 @@ const Profile = () => {
     }
   };
 
-  const [submitIsDisable, setSubmitIsDisable] = useState(true);
   const onValuesChange = () => {
     const currentValue = JSON.stringify(form.getFieldsValue());
-    const initialValue = JSON.stringify(userProfile);
+    const initialValue = JSON.stringify(initialFormValues);
     (currentValue !== initialValue) ? setSubmitIsDisable(false) : setSubmitIsDisable(true)
   }
 
@@ -168,7 +169,8 @@ const Profile = () => {
             type="primary"
             htmlType="submit"
             loading={submitLoading}
-            icon={<SaveOutlined />}>
+            icon={<SaveOutlined />}
+            disabled={submitIsDisable}>
             Save changes
           </Button>
         </Form.Item>
