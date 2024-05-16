@@ -11,6 +11,14 @@ import { UserProfilePramsType } from '@/types/models/user';
 
 const Profile = () => {
   const userProfile = useSelector((state: UserStoreType) => state.user.userProfile)
+  const initialFormValues = {
+    id: userProfile.id,
+    name: userProfile.name,
+    intro: userProfile.intro,
+    mobile: userProfile.mobile,
+    gender: userProfile.gender,
+    birthday: userProfile.birthday ? dayjs(userProfile.birthday) : undefined
+  }
   const [form] = Form.useForm()
 
   useEffect(() => {
@@ -56,14 +64,7 @@ const Profile = () => {
       <Form
         name="user-profile-details-form"
         layout="vertical"
-        initialValues={{
-          id: userProfile.id,
-          name: userProfile.name,
-          intro: userProfile.intro,
-          mobile: userProfile.mobile,
-          gender: userProfile.gender,
-          birthday: dayjs(userProfile.birthday)
-        }}
+        initialValues={initialFormValues}
         form={form}
         onFinish={onFinish}
         autoComplete="on"
@@ -120,7 +121,6 @@ const Profile = () => {
             >
               <DatePicker
                 onChange={onBirthdayChange}
-                defaultValue={dayjs(userProfile.birthday)}
                 style={{
                   width: '100%',
                 }} />
@@ -135,7 +135,6 @@ const Profile = () => {
               ]}
             >
               <Radio.Group
-                value={userProfile.gender}
                 onChange={onSelectGenderType}
               >
                 <Radio value={0}>Man</Radio>
