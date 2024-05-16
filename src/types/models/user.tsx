@@ -50,3 +50,8 @@ export type FollerItemType = {
   fans_count: number
   mutual_follow: boolean
 }
+
+export type FollwerParamsType = {
+  page?: number
+  per_page?: number
+}

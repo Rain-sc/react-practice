@@ -1,4 +1,4 @@
-import { FollerResType, LoginType, ResType, UserInfoResType, UserProfilePramsType, UserProfileResType } from "@/types/models/user";
+import { FollerResType, FollwerParamsType, LoginType, ResType, UserInfoResType, UserProfilePramsType, UserProfileResType } from "@/types/models/user";
 import { http } from "@/utils";
 
 
@@ -39,9 +39,10 @@ export function updateUserProfileAPI(formData: UserProfilePramsType) {
   })
 }
 
-export function fetchFollowersAPI(): Promise<ResType<FollerResType>> {
+export function fetchFollowersAPI(params?: FollwerParamsType): Promise<ResType<FollerResType>> {
   return http({
     url: '/user/followers',
-    method: 'GET'
+    method: 'GET',
+    params
   })
 }
