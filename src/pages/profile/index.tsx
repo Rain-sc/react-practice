@@ -1,4 +1,4 @@
-import { UserStoreType } from '@/store/modules/user';
+import { UserStoreType, fetchUserInfo, fetchUserProfile } from '@/store/modules/user';
 import { SaveOutlined } from '@ant-design/icons';
 import { Button, Card, Col, DatePicker, Form, Input, Radio, Row, Typography, message, } from 'antd';
 import { useEffect, useState } from 'react';
@@ -7,18 +7,12 @@ import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
 import { updateUserProfileAPI } from '@/apis/user';
 import { UserProfilePramsType } from '@/types/models/user';
+import { useAppDispatch } from "@/store"
 
 
 const Profile = () => {
   const userProfile = useSelector((state: UserStoreType) => state.user.userProfile)
-  const initialFormValues = {
-    id: userProfile.id,
-    name: userProfile.name,
-    intro: userProfile.intro,
-    mobile: userProfile.mobile,
-    gender: userProfile.gender,
-    birthday: userProfile.birthday ? dayjs(userProfile.birthday) : undefined
-  }
+  const dispatch = useAppDispatch()
   const [form] = Form.useForm()
 
   useEffect(() => {
@@ -41,7 +35,17 @@ const Profile = () => {
   }
 
   const [submitLoading, setSubmitLoading] = useState(false)
+  const initialFormValues = {
+    id: userProfile.id,
+    name: userProfile.name,
+    intro: userProfile.intro,
+    mobile: userProfile.mobile,
+    gender: userProfile.gender,
+    birthday: userProfile.birthday ? dayjs(userProfile.birthday) : undefined
+  }
+
   const onFinish = async (values: any) => {
+    if (submitIsDisable) return
     const { name, intro } = values
     try {
       setSubmitLoading(true)
@@ -52,6 +56,8 @@ const Profile = () => {
         intro: introduction
       }
       await updateUserProfileAPI(param)
+      dispatch(fetchUserInfo())
+      dispatch(fetchUserProfile())
       message.success("Update user profile successfully")
     } catch (error) {
       throw new Error("update user profile error")
@@ -59,6 +65,14 @@ const Profile = () => {
       setSubmitLoading(false)
     }
   };
+
+  const [submitIsDisable, setSubmitIsDisable] = useState(true);
+  const onValuesChange = () => {
+    const currentValue = JSON.stringify(form.getFieldsValue());
+    const initialValue = JSON.stringify(userProfile);
+    (currentValue !== initialValue) ? setSubmitIsDisable(false) : setSubmitIsDisable(true)
+  }
+
   return (
     <Card>
       <Form
@@ -70,6 +84,7 @@ const Profile = () => {
         autoComplete="on"
         requiredMark={false}
         disabled={submitLoading}
+        onValuesChange={onValuesChange}
       >
         <Row gutter={[16, 0]}>
           <Col sm={24} lg={24}>
