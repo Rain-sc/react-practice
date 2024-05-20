@@ -47,7 +47,7 @@ const Profile = () => {
 
   const onFinish = async (values: any) => {
     if (submitIsDisable) return
-    const { name, intro } = values
+    const { name } = values
     try {
       setSubmitLoading(true)
       setSubmitIsDisable(true)
