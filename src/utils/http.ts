@@ -3,7 +3,7 @@ import { links } from "@/router/links";
 import axios from "axios";
 
 const httpInstance = axios.create({
-  baseURL: 'http://geek.itheima.net/v1_0',
+  baseURL: '//geek.itheima.net/v1_0',
   timeout: 5000
 })
 
