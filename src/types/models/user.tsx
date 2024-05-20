@@ -2,6 +2,7 @@ export type ResType<T> = {
   data: T,
   message?: string
 }
+
 export type LoginType = {
   mobile: string
   code: string
@@ -14,27 +15,28 @@ export type UserProfilePramsType = {
   name: string;
 }
 
-export type UserProfileResType = {
-  birthday: string;
-  gender: number;
+type UserType = {
   id: string;
-  intro: null;
-  mobile: string;
   name: string;
   photo: string;
+  intro: string | null;
 }
 
-export type UserInfoResType = {
-  id: string
-  name: string
-  photo: string
-  intro: string | null
+type UserProfileType = {
+  birthday: string;
+  gender: number;
+  mobile: string;
+}
+export type UserProfileResType = UserType & UserProfileType
+
+type UserInfoType = {
   art_count: number
   follow_count: number
   fans_count: number
   like_count: number
 }
 
+export type UserInfoResType = UserType & UserInfoType
 
 export type FollerResType = {
   total_count: number
